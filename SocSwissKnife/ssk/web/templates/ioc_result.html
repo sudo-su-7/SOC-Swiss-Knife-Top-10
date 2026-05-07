@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<a class="back" href="/">← Back</a>
+<div class="card">
+  <h2>IOC Lookup Results</h2>
+  <table>
+    <thead>
+      <tr><th>IOC</th><th>Type</th><th>VT Score</th><th>AbuseIPDB</th><th>Verdict</th><th>VT Link</th></tr>
+    </thead>
+    <tbody>
+    {% for r in results %}
+      <tr>
+        <td class="mono">{{ r.ioc }}</td>
+        <td>{{ r.ioc_type }}</td>
+        <td>{% if r.error %}<span class="muted">{{ r.error }}</span>{% else %}{{ r.vt_score }}/{{ r.vt_total }}{% endif %}</td>
+        <td>{% if r.abuseipdb_score >= 0 %}{{ r.abuseipdb_score }}%{% else %}n/a{% endif %}</td>
+        <td><span class="badge {{ r.verdict.value }}">{{ r.verdict.value }}</span></td>
+        <td>{% if r.vt_link %}<a href="{{ r.vt_link }}" target="_blank" style="color:var(--cyan);font-size:.8rem">→ VT</a>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+[project]
+name = "soc-swiss-knife"
+version = "1.0.0"
+description = "SOC analyst toolkit: IOC lookup, hash checker, log analyser"
+requires-python = ">=3.11"
+dependencies = [
+    "typer>=0.12",
+    "rich>=13",
+    "httpx>=0.27",
+    "fastapi>=0.111",
+    "uvicorn>=0.30",
+    "jinja2>=3.1",
+    "python-dotenv>=1.0",
+    "python-multipart>=0.0.9",
+]
+
+[project.scripts]
+ssk = "ssk.cli:app"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-httpx>=0.30", "ruff>=0.4"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

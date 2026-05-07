@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<a class="back" href="/">← Back</a>
+
+{% if report.summary.get("error") %}
+  <div class="card"><p style="color:var(--red)">{{ report.summary.error }}</p></div>
+{% else %}
+
+<div class="summary-grid">
+  <div class="stat">
+    <div class="num">{{ report.summary.total_events }}</div>
+    <div class="label">Total Events</div>
+  </div>
+  <div class="stat">
+    <div class="num" style="color:var(--red)">{{ report.summary.severity_breakdown.get("CRITICAL", 0) }}</div>
+    <div class="label">Critical</div>
+  </div>
+  <div class="stat">
+    <div class="num" style="color:var(--yellow)">{{ report.summary.severity_breakdown.get("WARN", 0) }}</div>
+    <div class="label">Warnings</div>
+  </div>
+  <div class="stat">
+    <div class="num" style="color:var(--cyan)">{{ report.summary.severity_breakdown.get("INFO", 0) }}</div>
+    <div class="label">Info</div>
+  </div>
+</div>
+
+{% if report.summary.top_source_ips %}
+<div class="card">
+  <h2>Top Source IPs</h2>
+  <table>
+    <thead><tr><th>IP Address</th><th>Event Count</th></tr></thead>
+    <tbody>
+    {% for ip, count in report.summary.top_source_ips.items() %}
+      <tr><td class="mono">{{ ip }}</td><td>{{ count }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<div class="card">
+  <h2>Events ({{ report.events | length }}{% if report.events | length == 200 %}+{% endif %})</h2>
+  <table>
+    <thead><tr><th>Time</th><th>Severity</th><th>User</th><th>Source IP</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for e in report.events | sort(attribute="severity.value") | list %}
+      <tr>
+        <td class="mono muted" style="font-size:.8rem">{{ e.timestamp }}</td>
+        <td><span class="badge {{ e.severity.value }}">{{ e.severity.value }}</span></td>
+        <td class="mono">{{ e.user or "—" }}</td>
+        <td class="mono">{{ e.source_ip or "—" }}</td>
+        <td>{{ e.action }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

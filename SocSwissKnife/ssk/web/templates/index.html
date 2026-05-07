@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card" id="ioc">
+  <h2>🔍 IOC Lookup</h2>
+  <p class="muted" style="margin-bottom:.75rem;font-size:.85rem">One IP, domain, or URL per line. Checks VirusTotal + AbuseIPDB.</p>
+  <form action="/ioc" method="post">
+    <textarea name="indicators" placeholder="8.8.8.8&#10;malicious-domain.com&#10;https://phishing-site.xyz/payload"></textarea>
+    <button type="submit">Lookup →</button>
+  </form>
+</div>
+
+<div class="card" id="hash">
+  <h2>🔐 Hash Checker</h2>
+  <p class="muted" style="margin-bottom:.75rem;font-size:.85rem">MD5, SHA1, or SHA256 — one per line. Checks VirusTotal + MalwareBazaar.</p>
+  <form action="/hash" method="post">
+    <textarea name="hashes" placeholder="d41d8cd98f00b204e9800998ecf8427e&#10;aabbcc..."></textarea>
+    <button type="submit">Check →</button>
+  </form>
+</div>
+
+<div class="card" id="logs">
+  <h2>📋 Log Analyser</h2>
+  <p class="muted" style="margin-bottom:.75rem;font-size:.85rem">Upload an auth.log or syslog file. Flags brute force, sudo abuse, and unknown users.</p>
+  <form action="/logs" method="post" enctype="multipart/form-data">
+    <input type="file" name="log_file" accept=".log,.txt,*">
+    <button type="submit" style="display:block;margin-top:.75rem">Analyse →</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,55 +1,62 @@
-"""Data Models for SSK"""
-
+"""Core data models for SOC-Swiss-Knife."""
 from __future__ import annotations
 
-from ast import List
-from dataclasses import dataclass , field
-from datetime import datetime
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from enum import Enum
+
+
+def _now() -> datetime:
+    return datetime.now(timezone.utc)
+
 
 class Verdict(str, Enum):
     CLEAN = "CLEAN"
     SUSPICIOUS = "SUSPICIOUS"
     MALICIOUS = "MALICIOUS"
-    UNKOWN = "UNKOWN"
+    UNKNOWN = "UNKNOWN"
 
-def score_to_verdict (detections: int) -> Verdict:
+
+def score_to_verdict(detections: int) -> Verdict:
     if detections >= 5:
         return Verdict.MALICIOUS
     if detections >= 1:
         return Verdict.SUSPICIOUS
-    return Verdict.CLEAN  #add a controller for when the verdict is unknown
+    return Verdict.CLEAN
 
 
 @dataclass
 class IOCResult:
     ioc: str
-    ioc_type: str # "ip" | "domain" | "url"
+    ioc_type: str  # "ip" | "domain" | "url"
     vt_score: int = 0
     vt_total: int = 0
     vt_link: str = ""
     abuseipdb_score: int = 0
-    verdict: Verdict = Verdict.UNKOWN
-    checked_at: datetime = field(default_factory=datetime.utcnow)
+    verdict: Verdict = Verdict.UNKNOWN
+    checked_at: datetime = field(default_factory=_now)
     error: str = ""
+
 
 @dataclass
 class HashResult:
     hash_value: str
-    hash_type: str # md5 | sha1 | sha256
+    hash_type: str  # "md5" | "sha1" | "sha256"
     vt_score: int = 0
     vt_total: int = 0
     vt_link: str = ""
     mb_found: bool = False
-    mb_tags: List[str] = field(default_factory=list)
-    verdict: Verdict = Verdict.UNKOWN
-    checked_at: datetime = field(default_factory=datetime.utcnow)
+    mb_tags: list[str] = field(default_factory=list)
+    verdict: Verdict = Verdict.UNKNOWN
+    checked_at: datetime = field(default_factory=_now)
     error: str = ""
+
 
 class Severity(str, Enum):
     INFO = "INFO"
     WARN = "WARN"
     CRITICAL = "CRITICAL"
+
 
 @dataclass
 class LogEvent:
@@ -60,9 +67,10 @@ class LogEvent:
     severity: Severity
     raw: str = ""
 
+
 @dataclass
 class LogReport:
     file: str
-    events: List[LogEvent] = field(default_factory=list)
+    events: list[LogEvent] = field(default_factory=list)
     summary: dict = field(default_factory=dict)
-    analysed_at: datetime = field(default_factory=datetime.utcnow)
+    analysed_at: datetime = field(default_factory=_now)

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOC-Swiss-Knife</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149;
+    --cyan: #58a6ff; --accent: #1f6feb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; }
+  header h1 { font-size: 1.2rem; color: var(--cyan); letter-spacing: .05em; }
+  nav a { color: var(--muted); text-decoration: none; margin-right: 1.5rem; font-size: .9rem; transition: color .2s; }
+  nav a:hover { color: var(--text); }
+  main { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .card h2 { font-size: 1rem; color: var(--cyan); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .08em; }
+  textarea, input[type=file] { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: .75rem; font-family: monospace; font-size: .85rem; resize: vertical; }
+  textarea { min-height: 100px; }
+  button { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: .6rem 1.4rem; font-size: .9rem; cursor: pointer; margin-top: .75rem; transition: background .2s; }
+  button:hover { background: #388bfd; }
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  th { text-align: left; color: var(--muted); border-bottom: 1px solid var(--border); padding: .5rem .75rem; font-weight: 600; }
+  td { padding: .5rem .75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .78rem; font-weight: 600; }
+  .CLEAN,.clean { background: #0d2818; color: var(--green); }
+  .SUSPICIOUS,.suspicious { background: #2b2108; color: var(--yellow); }
+  .MALICIOUS,.malicious,.CRITICAL,.critical { background: #2a0e0e; color: var(--red); }
+  .UNKNOWN,.unknown { background: #1c1c1c; color: var(--muted); }
+  .INFO,.info { background: #0c2233; color: var(--cyan); }
+  .WARN,.warn { background: #2b2108; color: var(--yellow); }
+  .back { display: inline-block; margin-bottom: 1rem; color: var(--cyan); text-decoration: none; font-size: .9rem; }
+  .back:hover { text-decoration: underline; }
+  .mono { font-family: monospace; }
+  .muted { color: var(--muted); }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .stat { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; }
+  .stat .num { font-size: 2rem; font-weight: 700; }
+  .stat .label { font-size: .75rem; color: var(--muted); margin-top: .25rem; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚔ SOC-Swiss-Knife</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="#ioc">IOC Lookup</a>
+    <a href="#hash">Hash Check</a>
+    <a href="#logs">Log Analyser</a>
+  </nav>
+</header>
+<main>
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

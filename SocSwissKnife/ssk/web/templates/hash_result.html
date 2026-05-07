@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<a class="back" href="/">← Back</a>
+<div class="card">
+  <h2>Hash Check Results</h2>
+  <table>
+    <thead>
+      <tr><th>Hash</th><th>Type</th><th>VT Score</th><th>MalwareBazaar</th><th>Tags</th><th>Verdict</th></tr>
+    </thead>
+    <tbody>
+    {% for r in results %}
+      <tr>
+        <td class="mono" style="font-size:.78rem">{{ r.hash_value[:20] }}…</td>
+        <td>{{ r.hash_type.upper() }}</td>
+        <td>{% if r.error %}<span class="muted">{{ r.error }}</span>{% else %}{{ r.vt_score }}/{{ r.vt_total }}{% endif %}</td>
+        <td>{% if r.mb_found %}<span style="color:var(--red)">Found</span>{% else %}<span class="muted">Not found</span>{% endif %}</td>
+        <td>{% for tag in r.mb_tags %}<span class="badge SUSPICIOUS" style="margin-right:.25rem">{{ tag }}</span>{% endfor %}</td>
+        <td><span class="badge {{ r.verdict.value }}">{{ r.verdict.value }}</span></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
