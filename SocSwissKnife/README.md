@@ -113,5 +113,5 @@ ssk/
 
 ## Author
 
-**Daniel Mutuma** — Junior Cybersecurity Analyst @ Directcore Technologies  
+**Daniel Mutuma** — Junior Cybersecurity Analyst @ Infonex Solutions
 [github.com/sudo-su-7](https://github.com/sudo-su-7)
